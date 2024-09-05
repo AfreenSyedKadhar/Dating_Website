@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body {
+            background-color: #EEC4C4;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+        }
+        .search-bar-container{
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .search-bar{
+            display: flex;
+            align-items: center;
+            border: 2px solid red;
+            border-radius: 200px;
+            padding: 10px;
+            background-color: lightblue;
+            width: 500%;
+        }
+        .search-bar input[type="text"]{
+            border: none;
+            outline: none;
+            padding: 10px;
+            flex: 1;
+            font-size: 16px;
+            background-color: lightblue;
+
+        }
+        .search-bar button{
+            background-color:lightblue;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .search-bar button img{
+            width: 20px;
+            height: 20px;
+        }
+        .menu-icon{
+            font-size: 24px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .grid-container{
+            display: grid;
+            grid-template-columns: repeat(3,40%);
+            grid-template-rows: repeat(3,40%);
+            gap: 10px;
+        }
+        .body-circle{
+            height: 150px;
+            width: 150px;
+            border-radius: 65%;
+            padding-right: 50px;
+            background-color: white;
+            border: 7px solid lightcoral;
+            background-size: cover;
+            background-position: center;
+        }
+    
+        .rectangle-container {
+            position: fixed; 
+            left: 0; 
+            top: 0; 
+            height: 100%; 
+            width: 40vh; 
+            display: flex; 
+            flex-direction: column; 
+            background-color: red; 
+        }
+        .profile-circle{
+            height: 150px;
+            width: 150px;
+            border-radius: 75%;
+            background-color: white;
+            border: 7px solid #ffcccc;
+            margin: 50px auto;
+            background-image:url();
+            background-size: cover;
+            background-position: center;
+        }
+        .red-rectangle {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+        }
+
+        nav.bottom-nav {
+            background-color: red;
+            padding: 10px;
+        }
+
+        nav.bottom-nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+        }
+
+        nav.bottom-nav ul li {
+            margin: 10px 0; 
+        }
+
+        nav.bottom-nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            display: block;
+            padding: 10px;
+        }
+        main {
+            flex: 1; 
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="search-bar-container">
+        <div class="menu-icon">☰</div> 
+        <div class="search-bar">
+            <input type="text" placeholder="Hinted search text">
+            <button type="button">
+                <img src="search-image.png" alt="Search Icon" height="100%" width="100%"> 
+            </button>
+        </div>
+    </div>
+
+    <div class="grid-container">
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>
+    <div class="body-circle"></div>                
+    </div>
+    
+    <div class="rectangle-container">
+        <div class="profile-circle"></div>
+        <div class="red-rectangle">
+            <nav class="bottom-nav">
+                <ul>
+                    <li><a href="account.html" class="account-link">ACCOUNT</a></li>
+                    <li><a href="settings.html" class="settings-link">SETTINGS</a></li>
+                    <li><a href="upload.html" class="upload-link">UPLOAD</a></li>
+                    <li><a href="location.html" class="location-link">LOCATION</a></li>
+                    <li><a href="logout.html" class="logout-link">LOGOUT</a></li>
+                
+                </ul>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>
