@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .top {
+            background-color: #C90202;
+            width: 100%;
+            height: 30vh; /* Adjust to your needs */
+            box-sizing: border-box; /* Ensure padding/border doesn't affect width/height */
+            display: flex;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            position: relative;
+        }
+
+        .top img {
+            position: absolute; /* Position it relative to the .top container */
+            top: 10px; /* Adjust as needed */
+            left: 10px; /* Adjust as needed */
+            width: 100px; /* Adjust size as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        .center {
+            color: white;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 20px;
+            background-color: #f4f4f4;
+            height: calc(100vh - 30vh); /* Fill remaining viewport height */
+        }
+
+        .info {
+            max-width: 300px; /* Limit width of the info section */
+            margin-bottom: 20px; /* Add spacing between sections */
+        }
+
+        .info h2 {
+            margin-top: 0;
+        }
+
+        .info p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .about {
+            max-width: 300px; /* Optional: limit width */
+            background: #ffffffbd; /* Background color for visibility */
+            padding: 20px; /* Padding around the text */
+            border-radius: 25px; /* Rounded corners */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+        }
+
+        .about h2 {
+            margin-top: 0;
+            font-size: 30px;
+        }
+
+        .about p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top">
+        <img src="profile.jpg" alt="profile picture">
+        <div class="center">
+            <p>SONIA</p>
+        </div> 
+    </div>
+    
+    <div class="content">
+        <div class="info">
+            <h2>Details</h2>
+            <p><strong>Name         :</strong> Sonia</p>
+            <p><strong>Age          :</strong> 28</p>
+            <p><strong>Nationality  :</strong> American</p>
+            <p><strong>Occupation   :</strong> Software Developer</p>
+            <p><strong>Education    :</strong> Bachelor's in Computer Science</p>
+            <p><strong>Gender       :</strong> Female</p>
+            <p><strong>Height       :</strong> 5'6"</p>
+            <p><strong>Current Location:</strong> New York</p>
+        </div>
+
+        <!-- About section -->
+        <div class="about">
+            <h2>About Me</h2>
+            <p>Hello! I'm Sonia, a passionate software developer based in New York. I enjoy coding, hiking, and exploring new technologies. Always looking to learn and grow both personally and professionally.</p>
+        </div>
+    </div>
+</body>
+</html>
