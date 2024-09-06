@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            background-image: url('backgrd.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; 
+        }
+
+        .scroll-container {
+            display: flex;
+            width: 200vw; 
+            height: 100vh;
+            transition: transform 0.5s ease-in-out;
+            position: relative;
+            margin-left: 70px;
+        }
+
+        .section {
+            width: 100vw;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-image: url(bg2.png);
+            background-position: center;
+            height: 490px;
+            padding: 20px;
+            border-radius: 19px;
+            width: 400px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.355);
+            font-size: 5px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.3);
+            z-index: 1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container img {
+            max-width: 30%;
+            border-radius: 70%;
+        }
+
+        .login-container {
+            background-color: #fdaeae67;
+            padding: 20px;
+            border: 3px solid #C90202;
+            border-radius: 19px;
+            width: 389px;
+            margin-left: 60%; 
+            height: 490px;
+            text-align: center;
+        }
+
+        .login-container img {
+            max-width: 40%;
+            margin-bottom: -7px;
+            margin-top: -20px;
+        }
+
+        .input-group input {
+            margin-bottom: 19px;
+            width: 100%;
+            padding: 16px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            border: #C90202;
+            background: linear-gradient(to right, #C90202, #3305056e);
+            color: white;
+        }
+
+        .input-group input::placeholder {
+            color: #ffffff;
+            opacity: 0.7;
+        }
+
+        .next {
+            width: 20%;
+            padding: 13px;
+            margin: 20px auto;
+            display: block;
+            background-color: #DC6565;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        .register{
+            width: 20%;
+            padding: 13px;
+            margin: 20px auto;
+            display: block;
+            background-color: #DC6565;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="logo.png", alt="logo">
+        </div>
+    <div class="scroll-container" id="scroll-container">
+        <div class="section">
+            <div class="login-container">
+                <form id="loginForm">
+                    <img src="profileicon.png" alt="icon">
+                    <div class="input-group">
+                        <label for="name"></label>
+                        <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="age"></label>
+                        <input type="text" id="age" name="age" placeholder="Enter Your Age" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="nationality"></label>
+                        <input type="text" id="nationality" name="nationality" placeholder="Enter Your Nationality" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="qualification"></label>
+                        <input type="text" id="qualification" name="qualification" placeholder="Enter Your Qualification" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="marital"></label>
+                        <input type="text" id="marital" name="marital" placeholder="Enter Your Marital Status" required>
+                    </div>
+                    <button class="next" type="button" onclick="scrollToNextSection()">Next</button>
+                    <div class="error" id="error-message"></div>
+                </form>
+            </div>
+        </div>
+        <div class="section">
+            <div class="login-container">
+                <form id="loginForm">
+                    <div class="input-group">
+                        <label for="parentname"></label>
+                        <input type="text" id="parenname" name="name" placeholder="Enter Your ParentsName" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="religion"></label>
+                        <input type="text" id="religion" name="religion" placeholder="Enter Your Religion" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="height"></label>
+                        <input type="text" id="height" name="height" placeholder="Enter Your Height" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="weight"></label>
+                        <input type="text" id="weight" name="weight" placeholder="Enter Your Weight" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="gender"></label>
+                        <input type="text" id="gender" name="gender" placeholder="Enter Your " required>
+                    </div>
+                    <button class="register" type="button" onclick="gotothanks()">Register</button>
+                    <div class="error" id="error-message"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSection = 0;
+
+        function scrollToNextSection() {
+            const container = document.getElementById('scroll-container');
+            const sections = document.querySelectorAll('.section');
+            if (currentSection < sections.length - 1) {
+                currentSection++;
+            } else {
+                currentSection = 0; // Go back to the first section after the last one
+            }
+            container.style.transform = `translateX(-${currentSection * 100}vw)`;
+        }
+        
+        function validateForm() {
+    const name = document.getElementById('name').value.trim();
+    const age = document.getElementById('age').value.trim();
+    const nationality = document.getElementById('nationality').value.trim();
+    const qualification = document.getElementById('qualification').value.trim();
+    const marital = document.getElementById('marital').value.trim();
+    const errorMessage = document.getElementById('error-message');
+    
+    let errors = [];
+
+    // Check if any field is empty
+    if (name === '') errors.push('Name is required.');
+    if (age === '' || isNaN(age)) errors.push('Age is required and must be a number.');
+    if (nationality === '') errors.push('Nationality is required.');
+    if (qualification === '') errors.push('Qualification is required.');
+    if (marital === '') errors.push('Marital Status is required.');
+
+    // Display error messages
+    if (errors.length > 0) {
+        errorMessage.innerHTML = errors.join('<br>');
+        return false;
+    } else {
+        errorMessage.innerHTML = '';
+        return true;
+    }
+    function gotothanks(){
+        window.location.href='bot.html';
+    }
+}
+
+        
+    </script>
+</body>
+</html>
