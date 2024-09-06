@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN PAGE</title>
+</head>
+<body>
+    <div class="loginbox">
+        <form>
+            <div class="inputbox">
+                <label for="username">User Name</label>
+                <input type="text" id="username" name="username" aria-required="true" required>
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" aria-required="true" required>
+
+                <button type="submit" class="login-button">Login</button>
+
+                <button type="button" class="google-signin-button">Sign in with Google</button>
+            </div>
+        </form>
+        
+    </div>
+</body>
+<style>
+    body {
+        background-image: url("login_pg.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .loginbox {
+        background-color: #EEC4C4;
+        block-size: 550px;
+        inline-size: 200px;
+        width: 35%;
+        border: 3px solid #E83030;
+        position: relative;
+        left: 60%;
+        top: 70px; 
+    }
+    .inputbox {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        position: relative;
+        left: 10%;
+        margin-top: 20%;
+    }
+    label {
+        margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="password"] {
+        padding: 8px;
+        width: 100%;
+        max-width: 300px; 
+    }
+    .login-button,
+    .google-signin-button {
+        padding: 10px;
+        width: 100%;
+        max-width: 300px; 
+        background-color: #E83030;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+    .google-signin-button {
+        background-color: #4285F4;
+    }
+</style>
+<script>
+    const express = require('express');
+const mysql = require('mysql');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs'); // For password hashing
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Database connection
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',  // Your DB username
+    password: '',  // Your DB password
+    database: 'login_system' // Your DB name
+});
+
+db.connect((err) => {
+    if (err) {
+        console.error('Database connection failed: ' + err.stack);
+        return;
+    }
+    console.log('Connected to the database.');
+});
+
+// Serve HTML form
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/login.html'); // Path to your HTML file
+});
+
+// Handle form submission
+app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    // Query the DB to check for user credentials
+    const query = 'SELECT * FROM users WHERE username = ?';
+    db.query(query, [username], (err, result) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).send('Internal Server Error');
+        }
+
+        if (result.length > 0) {
+            // Compare the entered password with the hashed password in the database
+            bcrypt.compare(password, result[0].password, (err, isMatch) => {
+                if (isMatch) {
+                    res.send('Login successful');
+                } else {
+                    res.send('Invalid username or password');
+                }
+            });
+        } else {
+            res.send('User not found');
+        }
+    });
+});
+
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});
+
+</script>
+</html>
