@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <div class="scroll-container" id="scroll-container">
+        <!-- First Section -->
+        <div class="section">
+            <div class="login-container">
+                <form id="sectionOneForm">
+                    <!-- Profile Picture Upload -->
+                    <div class="profile-pic-container">
+                        <label for="profile-pic">
+                            <div class="upload-circle" id="display-circle">
+                                <p>+</p>
+                            </div>
+                        </label>
+                        <input type="file" id="profile-pic" accept="image/*" style="display: none;" required>
+                        <p>Upload Your Picture</p>
+                    </div>
+
+                    <!-- Input Fields -->
+                    <div class="input-group">
+                        <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="age" name="age" placeholder="Enter Your Age" required>
+                    </div>
+                    <div class="input-group">
+                        <select id="marital-status" name="marital-status" required>
+                            <option value="" disabled selected>Select Marital Status</option>
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                            <option value="divorced">Divorced</option>
+                            <option value="widow">Widow</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="gender">Your Gender:</label>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <button type="button" class="next" onclick="scrollToNextSection()">Next</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Second Section -->
+        <div class="section">
+            <div class="login-container">
+                <form id="sectionTwoForm">
+                    <!-- Input Fields -->
+                    <div class="input-group">
+                        <label for="looking-for">Looking For:</label>
+                        <select id="looking-for" name="looking-for" required>
+                            <option value="" disabled selected>Select Desired Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="any">Any</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="password" name="password" placeholder="Enter Your Password" required>
+                    </div>
+                    <div class="input-group">
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Your Password" required>
+                        <p class="error" id="passwordError" style="display: none;">Passwords do not match!</p>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="description" name="description" placeholder="Write a short description about yourself" rows="4" required></textarea>
+                    </div>
+                    <button type="button" class="register" onclick="validateAndSubmit()">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+	
+<script>
+
+    let currentSection = 0;
+
+// Navigate to the next section
+function scrollToNextSection() {
+    const container = document.getElementById('scroll-container');
+    const sections = document.querySelectorAll('.section');
+    if (currentSection < sections.length - 1) {
+        currentSection++;
+        container.style.transform = `translateX(-${currentSection * 100}vw)`;
+    }
+}
+
+// Display uploaded photo in the circular area
+document.getElementById('profile-pic').addEventListener('change', function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const displayCircle = document.getElementById('display-circle');
+            displayCircle.style.backgroundImage = `url('${e.target.result}')`;
+            displayCircle.style.backgroundSize = 'cover';
+            displayCircle.style.backgroundPosition = 'center';
+            displayCircle.innerHTML = ''; // Remove the "+" symbol
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Validate passwords and submit the form
+async function validateAndSubmit() {
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const passwordError = document.getElementById('passwordError');
+
+    if (password !== confirmPassword) {
+        passwordError.style.display = 'block';
+        return;
+    } else {
+        passwordError.style.display = 'none';
+    }
+
+    // Collect all form data
+    const formData = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        maritalStatus: document.getElementById('marital-status').value,
+        gender: document.getElementById('gender').value,
+        lookingFor: document.getElementById('looking-for').value,
+        email: document.getElementById('email').value,
+        password: password,
+        description: document.getElementById('description').value,
+    };
+
+    // Process uploaded profile picture
+    const file = document.getElementById('profile-pic').files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            formData.profilePic = e.target.result; // Base64 data
+
+            // Proceed to submit the form after encoding the image
+            submitFormData(formData);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        // If no image is uploaded, directly submit the form
+        submitFormData(formData);
+    }
+}
+
+// Separate function to handle the form submission
+async function submitFormData(formData) {
+    try {
+        const response = await fetch('http://localhost:5000/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+            // Optionally, redirect to a success page or clear the form
+            window.location.href = '/success.html';
+        } else {
+            alert(result.message || 'Registration failed!');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while registering!');
+    }
+}
+
+</script>
+</body>
+<style>
+body {
+    background-image: url('backgrd.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.scroll-container {
+    display: flex;
+    width: 200vw;
+    height: 100vh;
+    transition: transform 0.5s ease-in-out;
+}
+
+.section {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: #fdaeae67;
+    padding: 20px;
+    border: 3px solid #C90202;
+    border-radius: 19px;
+    width: 400px;
+    text-align: center;
+}
+
+.profile-pic-container {
+    text-align: center;
+}
+
+.upload-circle {
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #C90202;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0 auto 10px;
+    cursor: pointer;
+    border: 2px dashed #C90202;
+}
+
+.input-group input,
+.input-group select,
+textarea {
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #C90202;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: none;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+button {
+    background-color: #DC6565;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+</style>
+</html>
